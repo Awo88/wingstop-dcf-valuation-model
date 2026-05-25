@@ -79,4 +79,4 @@ The sensitivity analysis stress-tests the implied price across WACC assumptions 
 
 -----
 
-*Built by Adebola Awokoya — Applied Mathematics, Towson University (May 2026)*
+*Built by Adebola Awokoya — Applied Mathematics, Towson University (2026)*
