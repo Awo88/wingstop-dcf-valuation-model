@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wingstop DCF Valuation Model</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#07090e;--surface:#0d1117;--surface2:#131920;--border:#1e2a3a;--border2:#2a3a50;--text:#e0ddd6;--muted:#4a5a70;--muted2:#6a7a90;--accent:#c4904a;--green:#7bc67e;--red:#e06868}
+body{background:var(--bg);color:var(--text);font-family:'Space Mono',monospace;font-size:13px;min-height:100vh;padding:3rem 1.5rem 5rem}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4}
+.wrap{max-width:640px;margin:0 auto;position:relative;z-index:1}
+.tag{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;font-size:3rem;color:var(--accent);line-height:1;letter-spacing:-.01em;margin-bottom:.75rem}
+.sub{font-size:11px;color:var(--muted2);letter-spacing:.06em;line-height:1.8;margin-bottom:2.5rem;max-width:480px}
+.divider{height:1px;background:var(--border);margin:2rem 0}
+.section-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+.body-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--muted2);line-height:1.9;margin-bottom:1.5rem}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:2rem}
+.chip{font-size:9px;letter-spacing:.1em;padding:4px 12px;border-radius:2px;border:1px solid var(--border2);color:var(--muted2);text-transform:uppercase}
+.chip.lang{border-color:var(--accent);color:var(--accent)}
+.methods{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:2rem}
+.method{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:14px}
+.method-name{font-size:10px;color:var(--text);letter-spacing:.06em;margin-bottom:4px}
+.method-desc{font-size:10px;color:var(--muted);line-height:1.6}
+.valuation-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:2rem}
+.val-box{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:14px;text-align:center}
+.val-label{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.val-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--accent)}
+.repo-link{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border:1px solid var(--border2);border-radius:3px;color:var(--muted2);font-size:10px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .2s;margin-top:.5rem}
+.repo-link:hover{border-color:var(--accent);color:var(--accent)}
+.footer{margin-top:3rem;font-size:9px;color:var(--muted);letter-spacing:.06em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="tag">Finance · Valuation · Python</div>
+  <h1>Wingstop DCF<br>Valuation Model</h1>
+  <p class="sub">Discounted Cash Flow valuation of Wingstop (WING) analyzing intrinsic value through free cash flow forecasting, WACC estimation, and sensitivity analysis.</p>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Overview</div>
+  <p class="body-text">This project builds a full Discounted Cash Flow model to estimate the intrinsic value of Wingstop Inc. (WING) using publicly available financial data. The model projects free cash flows over a multi-year forecast horizon, discounts them at the weighted average cost of capital, and adds a terminal value — producing an estimated fair value per share.</p>
+  <p class="body-text">The analysis examines Wingstop's unit economics, franchise model, and growth trajectory to inform the assumptions driving the valuation. Sensitivity analysis tests the model's output across ranges of growth and discount rate assumptions.</p>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Model Components</div>
+  <div class="valuation-row">
+    <div class="val-box">
+      <div class="val-label">Step 01</div>
+      <div class="val-name">FCF Forecast</div>
+    </div>
+    <div class="val-box">
+      <div class="val-label">Step 02</div>
+      <div class="val-name">WACC</div>
+    </div>
+    <div class="val-box">
+      <div class="val-label">Step 03</div>
+      <div class="val-name">Terminal Value</div>
+    </div>
+  </div>
+
+  <div class="section-label">Methods</div>
+  <div class="methods">
+    <div class="method">
+      <div class="method-name">DCF Valuation</div>
+      <div class="method-desc">Multi-year free cash flow projection discounted at WACC to estimate present value of future earnings</div>
+    </div>
+    <div class="method">
+      <div class="method-name">FCF Modeling</div>
+      <div class="method-desc">Operating cash flow and capex forecasting grounded in Wingstop's historical financials and unit economics</div>
+    </div>
+    <div class="method">
+      <div class="method-name">WACC Estimation</div>
+      <div class="method-desc">Cost of equity via CAPM plus cost of debt, weighted by capital structure for the discount rate</div>
+    </div>
+    <div class="method">
+      <div class="method-name">Sensitivity Analysis</div>
+      <div class="method-desc">Two-way sensitivity tables testing valuation across growth rate and WACC assumption ranges</div>
+    </div>
+  </div>
+
+  <div class="section-label">Stack</div>
+  <div class="chips">
+    <span class="chip lang">Python</span>
+    <span class="chip">Pandas</span>
+    <span class="chip">NumPy</span>
+    <span class="chip">DCF Modeling</span>
+    <span class="chip">Financial Analysis</span>
+  </div>
+
+  <a class="repo-link" href="https://github.com/Awo88/wingstop-dcf-valuation-model" target="_blank">
+    ↗ View on GitHub
+  </a>
+
+  <div class="footer">Personal project · Source available on GitHub</div>
+</div>
+</body>
+</html>
